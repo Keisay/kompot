@@ -45,7 +45,7 @@ driver.get(open_link)
 scroll_pause = 1.5
 
 for i in range(5):
-  
+    # Scrolling down the page
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
     time.sleep(scroll_pause)
     
@@ -61,6 +61,7 @@ print(hrefs)
 opener = urllib.request.URLopener()
 opener.addheader('User-Agent', 'DuckDuckBot')
 
+# A function that retrieve a video
 def download_video(url):
     t = datetime.now()
     img_name = str(t.day) + '.' + str(t.month) + '.' + str(t.year) + '-' + str(t.hour) + '.' + str(t.minute) + '.' + str(t.second)
@@ -72,6 +73,7 @@ driver = webdriver.Chrome('your_path', chrome_options=opt)
 driver.get(hrefs[0])
 counter = 0
 
+# This function will help us to find the path of the video wanted
 def dummy(url):
     
     # The idea is to find the xpath of the video 
@@ -90,8 +92,12 @@ for i in range(len(hrefs)):
            
     driver.find_element_by_xpath("//*[@id='stories-container']/div[3]/div/div[2]/div[3]").click()
     counter += 1
+    # time.sleep() is important because we have to think about page load time
     time.sleep(2)
     
+    # On this website, a window will appear after 15-20 seconds and it will stop the script
+    # So we reopen a tab every twelve iterations in order to keep the script working
+    # We start downloading at the ith element
     if counter == 12:
         counter = 0
         driver = webdriver.Chrome('your_path', chrome_options=opt)
